@@ -1,10 +1,4 @@
-# Boosting Adversarial Training with Hypersphere Embedding (submitted to ICML 2020)
-
-This repository contains the codes for reproducing most of the results of our ICML submission.
-
-Paper Tittle:
-
-***Boosting Adversarial Training with Hypersphere Embedding***
+# Boosting Adversarial Training with Hypersphere Embedding
 
 ## Environment settings and libraries we used in our experiments
 
