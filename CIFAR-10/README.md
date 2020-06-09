@@ -27,7 +27,7 @@ python train_adv_cifar10.py --loss=trades_he --beta=6.0 --s=15.0 --m=0.2
 python train_adv_cifar10.py --loss=alp_he --beta=0.5 --s=20.0 --m=0.3
 ```
 
-Our pre-trained models are available, including [PGD+HE](http://ml.cs.tsinghua.edu.cn/~xiaoyang/downloads/weights/model-wideres-pgdHE.pt).
+Our pre-trained models are available, including [PGD+HE](http://ml.cs.tsinghua.edu.cn/~xiaoyang/downloads/weights/model-wideres-pgdHE.pt). We find that our HE mechanism is more suitable for the PGD-AT framework, since its principled formula is more aligned with our analysis.
 
 ## Robustness Evaluation
 
