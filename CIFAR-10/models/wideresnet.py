@@ -46,13 +46,14 @@ class NetworkBlock(nn.Module):
 
 
 class WideResNet(nn.Module):
-    def __init__(self, depth=34, num_classes=10, widen_factor=10, dropRate=0.0, normalize = False):
+    def __init__(self, depth=34, num_classes=10, widen_factor=10, dropRate=0.0, use_FNandWN=False, i_normalize=True):
         super(WideResNet, self).__init__()
         nChannels = [16, 16 * widen_factor, 32 * widen_factor, 64 * widen_factor]
         assert ((depth - 4) % 6 == 0)
         n = (depth - 4) / 6
         block = BasicBlock
-        self.normalize = normalize
+        self.use_FNandWN = use_FNandWN
+        self.i_normalize = i_normalize
         # 1st conv before any network block
         self.conv1 = nn.Conv2d(3, nChannels[0], kernel_size=3, stride=1,
                                padding=1, bias=False)
@@ -67,7 +68,7 @@ class WideResNet(nn.Module):
         # global average pooling and classifier
         self.bn1 = nn.BatchNorm2d(nChannels[3])
         self.relu = nn.ReLU(inplace=True)
-        if self.normalize:
+        if self.use_FNandWN:
             self.fc = nn.Linear(nChannels[3], num_classes, bias = False)
         else:
             self.fc = nn.Linear(nChannels[3], num_classes)
@@ -80,10 +81,14 @@ class WideResNet(nn.Module):
             elif isinstance(m, nn.BatchNorm2d):
                 m.weight.data.fill_(1)
                 m.bias.data.zero_()
-            elif isinstance(m, nn.Linear) and not self.normalize:
+            elif isinstance(m, nn.Linear) and not self.use_FNandWN:
                 m.bias.data.zero_()
-
+        
     def forward(self, x):
+        if self.i_normalize:
+            self.mu = torch.tensor((0.4914, 0.4822, 0.4465)).view(3,1,1).cuda()
+            self.std = torch.tensor((0.2471, 0.2435, 0.2616)).view(3,1,1).cuda()
+            x = (x - self.mu)/self.std
         out = self.conv1(x)
         out = self.block1(out)
         out = self.block2(out)
@@ -91,7 +96,7 @@ class WideResNet(nn.Module):
         out = self.relu(self.bn1(out))
         out = F.avg_pool2d(out, 8)
         out = out.view(-1, self.nChannels)
-        if self.normalize:
+        if self.use_FNandWN:
             out = F.normalize(out, p=2, dim=1)
             for _, module in self.fc.named_modules():
                 if isinstance(module, nn.Linear):

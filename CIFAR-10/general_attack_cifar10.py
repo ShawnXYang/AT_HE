@@ -100,7 +100,7 @@ def main():
         model = WideResNet().to(device)
     else:
         print("normalize True")
-        model = WideResNet(normalize = True).to(device)
+        model = WideResNet(use_FNandWN = True).to(device)
     model.load_state_dict(torch.load(args.model_path))
     
     print('====== test general =====')

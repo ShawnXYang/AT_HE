@@ -16,7 +16,7 @@ parser.add_argument('--batch-size', type=int, default=128, metavar='N',
                     help='input batch size for training (default: 128)')
 parser.add_argument('--test-batch-size', type=int, default=128, metavar='N',
                     help='input batch size for testing (default: 128)')
-parser.add_argument('--epochs', type=int, default=82, metavar='N',
+parser.add_argument('--epochs', type=int, default=77, metavar='N',
                     help='number of epochs to train')
 parser.add_argument('--weight-decay', '--wd', default=2e-4,
                     type=float, metavar='W')
@@ -172,7 +172,7 @@ def main():
         model = nn.DataParallel(WideResNet()).to(device)
     else:
         print("normalize True")
-        model = nn.DataParallel(WideResNet(normalize = True)).to(device)
+        model = nn.DataParallel(WideResNet(use_FNandWN = True)).to(device)
     
     optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
 

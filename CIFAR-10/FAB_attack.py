@@ -23,7 +23,7 @@ if args.loss == 'trades' or args.loss == 'pgd' or args.loss == 'alp':
     model = WideResNet()
 else:
     print("normalize True")
-    model = WideResNet(normalize = True)
+    model = WideResNet(use_FNandWN = True)
 
 model.load_state_dict(torch.load(args.model_path))
 loader = get_cifar10_test_loader(batch_size=100)
