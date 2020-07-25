@@ -38,7 +38,7 @@ To evaluate the performance of the trained models under the PGD attacks (default
 ```
 
 ### Under AutoAttack
-We also evaluate a reliable attack, named AutoAttack(http://ml.cs.tsinghua.edu.cn/~xiaoyang/downloads/weights/model-wideres-pgdHE-wide20.pt), the running command is 
+We also evaluate a reliable attack, named [AutoAttack](https://github.com/fra31/auto-attack), the running command is 
 ```shell
   $ python test_autoattack.py --model-path=$CHECKPOINT_PATH$ --use_FNandWN --widen_factor=20
 
