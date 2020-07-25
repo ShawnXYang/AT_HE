@@ -8,9 +8,8 @@ import torchvision
 from torch.autograd import Variable
 from torchvision import datasets, transforms
 from autoattack import AutoAttack
-from wideresnet_norm import WideResNet
+from models.wideresnet import *
 import argparse
-from autoattack import AutoAttack
 
 parser = argparse.ArgumentParser(description='Adversarial Training')
 parser.add_argument('--name', type=str, default='pgd')
