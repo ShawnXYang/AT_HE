@@ -14,7 +14,7 @@ Here we activate the `HE` operation and set the scale `s` and margin `m`.
 
 * Train PGD-AT + HE:
 ```shell
-python train_adv_cifar10.py --loss=pgd_he --s=10.0 --m=0.2
+python train_adv_cifar10.py --loss=pgd_he --s=10.0 --m=0.2 --wd 5e-4
 ```
 
 * Train TRADES + HE:
